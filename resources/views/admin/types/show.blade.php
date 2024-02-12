@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <!-- TITOLO - TORNA AI PROGETTI - ALERT -->
+        <!-- TITOLO - TORNA AI TIPI- ALERT -->
         <div class="d-flex align-items-center justify-content-between">
             <h1 class="fs-2 py-2">Type #{{ $type->id }}</h1>
             <a href="{{ route('admin.types.index') }}" class="btn btn-dark">Back to Types<i

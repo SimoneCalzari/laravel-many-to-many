@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="container">
-        <!-- TITOLO - NUOVO TYPE - ALERT -->
+        <!-- TITOLO - NUOVO TIPO - ALERT -->
         <div class="d-flex align-items-center justify-content-between">
             <h1 class="fs-2 py-2">My project types</h1>
             <a href="{{ route('admin.types.create') }}" class="btn btn-dark">New Type<i class="fa-solid fa-plus ms-3"></i></a>
@@ -18,7 +18,7 @@
                 {{ session('delete_record') }}
             </div>
         @endif
-        <!-- /TITOLO - NUOVO PROGETTO - ALERT -->
+        <!-- /TITOLO - NUOVO TIPO - ALERT -->
         <!-- TABLE-->
         <table class="table table-bordered table-dark table-striped text-center">
             <!-- TABLE HEAD-->
