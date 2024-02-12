@@ -74,7 +74,6 @@
                     </div>
                 @endforeach
             @enderror
-
             <!-- /TECHNOLOGIES CHECKBOXES -->
             <!-- TYPE RADIO -->
             <h5 class="fs-6 mb-2">Project Type</h5>

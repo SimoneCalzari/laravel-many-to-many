@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 
+
 @section('content')
     <div class="container">
         <!-- TITOLO - TORNA AI PROGETTI -->
@@ -56,6 +57,26 @@
                 @endforeach
             @enderror
             <!-- /DESCRIPTION -->
+            <!-- TECHNOLOGIES CHECKBOXES -->
+            <h5 class="fs-6 mb-2">Technologies</h5>
+            @foreach ($technologies as $technology)
+                <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input" type="checkbox" id="technology_{{ $technology->id }}"
+                        value="{{ $technology->id }}" name="technologies[]"
+                        @if ($errors->any()) {{ in_array($technology->id, old('technologies', [])) ? 'checked' : '' }}
+                        @elseif ($project->technologies->contains($technology))
+                        checked @endif>
+                    <label class="form-check-label" for="technology_{{ $technology->id }}">{{ $technology->name }}</label>
+                </div>
+            @endforeach
+            @error('technologies')
+                @foreach ($errors->get('technologies') as $error)
+                    <div class="alert alert-danger">
+                        {{ $error }}
+                    </div>
+                @endforeach
+            @enderror
+            <!-- /TECHNOLOGIES CHECKBOXES -->
             <!-- TYPE RADIO -->
             <h5 class="fw-lighter">Project Type</h5>
             <div class="mb-2 form-check">
@@ -118,8 +139,9 @@
                 <label class="form-label" for="project-img ">Project Picture</label>
                 <div class="d-flex w-50">
                     <input type="file" class="form-control rounded-end-0" id="project-img" name="project_img">
-                    <div role="button" class="bg-dark text-white border-0 fs-5 px-3 rounded-end-3" id="empty-img-field"><i
-                            class="fa-solid fa-xmark align-middle"></i></div>
+                    <div role="button" class="bg-dark text-white border-0 fs-5 px-3 rounded-end-3" id="empty-img-field">
+                        <i class="fa-solid fa-xmark align-middle"></i>
+                    </div>
                 </div>
             </div>
             <!-- /UPLOAD IMMAGINE -->
