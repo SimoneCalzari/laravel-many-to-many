@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
 
+
+
 @section('content')
     <div class="container">
         <!-- TITOLO - TORNA AI PROGETTI -->
@@ -55,6 +57,25 @@
                 @endforeach
             @enderror
             <!-- /DESCRIPTION -->
+            <!-- TECHNOLOGIES CHECKBOXES -->
+            <h5 class="fs-6 mb-2">Technologies</h5>
+            @foreach ($technologies as $technology)
+                <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input" type="checkbox" id="technology_{{ $technology->id }}"
+                        value="{{ $technology->id }}" name="technologies[]"
+                        @if (in_array($technology->id, old('technologies', []))) checked @endif>
+                    <label class="form-check-label" for="technology_{{ $technology->id }}">{{ $technology->name }}</label>
+                </div>
+            @endforeach
+            @error('technologies')
+                @foreach ($errors->get('technologies') as $error)
+                    <div class="alert alert-danger">
+                        {{ $error }}
+                    </div>
+                @endforeach
+            @enderror
+
+            <!-- /TECHNOLOGIES CHECKBOXES -->
             <!-- TYPE RADIO -->
             <h5 class="fs-6 mb-2">Project Type</h5>
             <div class="mb-2 form-check">

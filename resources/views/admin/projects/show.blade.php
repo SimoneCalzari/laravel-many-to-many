@@ -34,6 +34,20 @@
                 <p class="card-text">{{ $project->technologies_stack }}</p>
                 <h5 class="card-title">Description</h5>
                 <p class="card-text">{{ $project->description }}</p>
+                <!--  TECHNOLOGIES -->
+                @if ($project->technologies->count() > 0)
+                    <h5 class="card-title">Technologies</h5>
+                    <p class="card-text">
+                        @foreach ($project->technologies as $technology)
+                            @if ($loop->last)
+                                {{ $technology->name }}
+                            @else
+                                {{ $technology->name }},
+                            @endif
+                        @endforeach
+                    </p>
+                @endif
+                <!--  /TECHNOLOGIES -->
                 <h5 class="card-title">Project Type</h5>
                 <p class="card-text">
                     @if ($project->is_frontend)

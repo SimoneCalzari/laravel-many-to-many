@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -28,7 +29,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -36,15 +38,14 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-
-        $data_validated = $request->validated();
+        $data = $request->validated();
 
 
         $project = new Project();
-        $project->fill($data_validated);
+        $project->fill($data);
 
         $project->slug = Str::of($project->title)->slug('-');
-        switch ($request['application_type']) {
+        switch ($data['application_type']) {
             case '1':
                 $project->is_frontend = true;
                 break;
@@ -56,10 +57,13 @@ class ProjectController extends Controller
                 break;
         }
 
-        if (!empty($data_validated['project_img'])) {
-            $project->project_img = Storage::put('uploads', $data_validated['project_img']);
+        if (!empty($data['project_img'])) {
+            $project->project_img = Storage::put('uploads', $data['project_img']);
         }
         $project->save();
+        if (!empty($data['technologies'])) {
+            $project->technologies()->sync($data['technologies']);
+        }
         return redirect()->route('admin.projects.index')->with('new_record', "Il progetto $project->title #$project->id è stato aggiunto ai tuoi progetti");
     }
 
