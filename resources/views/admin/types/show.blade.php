@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 
+
 @section('content')
     <div class="container">
         <!-- TITOLO - TORNA AI TIPI- ALERT -->
@@ -28,6 +29,13 @@
                     @endif
                 </p>
                 <!-- EDIT-->
+                <h5 class="card-title">Projects</h5>
+                <p class="card-text">
+                    @foreach ($projects as $project)
+                        #{{ $project->id }}- <a
+                            href="{{ route('admin.projects.show', $project) }}">{{ $project->title }}</a> </br>
+                    @endforeach
+                </p>
                 <a href="{{ route('admin.types.edit', $type) }}" class="btn btn-primary">
                     Edit
                     <i class="fa-solid fa-pen-to-square ms-1"></i></a>
