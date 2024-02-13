@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TypeRequest;
-use App\Models\Project;
+use App\Http\Requests\StoreTypeRequest;
+use App\Http\Requests\UpdateTypeRequest;
 use App\Models\Type;
-use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TypeController extends Controller
 {
@@ -30,12 +30,13 @@ class TypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TypeRequest $request)
+    public function store(StoreTypeRequest $request)
     {
         $data = $request->validated();
 
         $type = new Type();
         $type->fill($data);
+        $type->slug = Str::of($type->difficulty)->slug();
         $type->save();
 
         return redirect()->route('admin.types.index')->with('new_record', "Il tipo $type->title #$type->id è stato aggiunto ai tuoi tipi");
@@ -60,9 +61,10 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TypeRequest $request, Type $type)
+    public function update(UpdateTypeRequest $request, Type $type)
     {
         $data = $request->validated();
+        $type->slug = Str::of($data['difficulty'])->slug('-');
         $type->update($data);
         return redirect()->route('admin.types.show', $type)->with('update_record', "Il tipo $type->difficulty è stato aggiornato");
     }

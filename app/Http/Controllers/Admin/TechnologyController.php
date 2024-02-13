@@ -71,7 +71,7 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        $technology_deleted = $technology->dname;
+        $technology_deleted = $technology->name;
         $technology_deleted_id = $technology->id;
         $technology->delete();
         return redirect()->route('admin.technologies.index')->with('delete_record', "Il tipo $technology_deleted #$technology_deleted_id è stato rimosso dai tuoi typi");

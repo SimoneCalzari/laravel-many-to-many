@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Type;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class TypesTableSeeder extends Seeder
 {
@@ -18,6 +19,7 @@ class TypesTableSeeder extends Seeder
         foreach ($difficulties as $difficulty) {
             $type = new Type();
             $type->difficulty = $difficulty;
+            $type->slug = Str::of($type->difficulty)->slug('-');
             $type->is_team_project = random_int(0, 1);
             $type->save();
         }

@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class TypeRequest extends FormRequest
+class UpdateTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +24,7 @@ class TypeRequest extends FormRequest
     {
 
         return [
-            'difficulty' => 'required|max:20',
+            'difficulty' => ['required', 'max:20', Rule::unique('types')->ignore($this->type)],
             'is_team_project' => 'required|boolean'
         ];
     }
@@ -33,6 +34,7 @@ class TypeRequest extends FormRequest
         return [
             'difficulty.required' => 'La difficoltà è obbligatoria',
             'difficulty.max' => 'La difficoltà deve essere al massimo di :max caratteri',
+            'difficulty.unique' => 'Esiste una difficoltà con lo stesso nome, riprova',
             'is_team_project.required' => 'Specificare se è un progetto di team o individuale è obbligatorio',
             'is_team_project.boolean' => 'Basta Mr Robot, lascia stare l\'inspector'
         ];
