@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TechnologyRequest;
+use App\Http\Requests\StoreTechnologyRequest;
+use App\Http\Requests\UpdateTechnologyRequest;
 use App\Models\Technology;
-use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TechnologyController extends Controller
 {
@@ -29,12 +30,13 @@ class TechnologyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TechnologyRequest $request)
+    public function store(StoreTechnologyRequest $request)
     {
         $data = $request->validated();
 
         $technology = new Technology();
         $technology->fill($data);
+        $technology->slug = Str::of($technology->name)->slug();
         $technology->save();
 
         return redirect()->route('admin.technologies.index')->with('new_record', "Il tipo $technology->title #$technology->id è stato aggiunto ai tuoi tipi");
@@ -59,9 +61,10 @@ class TechnologyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TechnologyRequest $request, Technology $technology)
+    public function update(UpdateTechnologyRequest $request, Technology $technology)
     {
         $data = $request->validated();
+        $technology->slug = Str::of($data['name'])->slug();
         $technology->update($data);
         return redirect()->route('admin.technologies.show', $technology)->with('update_record', "Il tipo $technology->name è stato aggiornato");
     }
@@ -71,6 +74,7 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
+        $technology->projects()->sync([]);
         $technology_deleted = $technology->name;
         $technology_deleted_id = $technology->id;
         $technology->delete();

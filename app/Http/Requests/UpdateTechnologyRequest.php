@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class TechnologyRequest extends FormRequest
+class UpdateTechnologyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +23,15 @@ class TechnologyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:50'
+            'name' => ['required', 'max:50', Rule::unique('technologies')->ignore($this->technology)],
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => 'Il nome è obbligatorio',
+            'name.max' => 'Il nome può essere al massimo di :max caratteri',
+            'name.unique' => 'Questo nome di tecnologia è già presente'
         ];
     }
 }

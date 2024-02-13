@@ -16,17 +16,18 @@ class ProjectsTableSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        Project::truncate();
+        // Project::truncate();
         for ($i = 0; $i < 20; $i++) {
 
             $type = Type::inRandomOrder()->first();
 
             $project = new Project();
             $project->title = $faker->sentence(3);
-            $project->type_id = $type->id;
+
             $project->description = $faker->paragraph();
             $project->slug = Str::of($project->title)->slug('-');
             $project->technologies_stack = $faker->words(3, true);
+            $project->type_id = $type->id;
             $project->save();
         }
     }
