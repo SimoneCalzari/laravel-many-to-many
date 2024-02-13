@@ -29,13 +29,15 @@
                     @endif
                 </p>
                 <!-- EDIT-->
-                <h5 class="card-title">Projects</h5>
-                <p class="card-text">
-                    @foreach ($projects as $project)
-                        #{{ $project->id }}- <a
-                            href="{{ route('admin.projects.show', $project) }}">{{ $project->title }}</a> </br>
-                    @endforeach
-                </p>
+                @if ($projects->count() > 0)
+                    <h5 class="card-title">Projects</h5>
+                    <p class="card-text">
+                        @foreach ($projects as $project)
+                            #{{ $project->id }}- <a
+                                href="{{ route('admin.projects.show', $project) }}">{{ $project->title }}</a> </br>
+                        @endforeach
+                    </p>
+                @endif
                 <a href="{{ route('admin.types.edit', $type) }}" class="btn btn-primary">
                     Edit
                     <i class="fa-solid fa-pen-to-square ms-1"></i></a>

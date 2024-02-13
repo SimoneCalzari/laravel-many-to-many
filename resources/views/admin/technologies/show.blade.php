@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 
+
 @section('content')
     <div class="container">
         <!-- TITOLO - TORNA ALLE TECNOLOGIE - ALERT -->
@@ -19,6 +20,18 @@
             <div class="card-body">
                 <h5 class="card-title">Name</h5>
                 <p class="card-text">{{ $technology->name }}</p>
+                <!-- PROJECTS -->
+                @if ($technology->projects->count() > 0)
+                    <h5 class="card-title">Projects</h5>
+                    <p class="card-text">
+                        @foreach ($technology->projects as $project)
+                            #{{ $project->id }}- <a
+                                href="{{ route('admin.projects.show', $project) }}">{{ $project->title }}</a> </br>
+                        @endforeach
+                    </p>
+                @endif
+                <!-- /PROJECTS -->
+
                 <!-- EDIT-->
                 <a href="{{ route('admin.technologies.edit', $technology) }}" class="btn btn-primary">
                     Edit
