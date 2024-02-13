@@ -25,7 +25,7 @@
                     <h5 class="card-title">Projects</h5>
                     <p class="card-text">
                         @foreach ($technology->projects as $project)
-                            #{{ $project->id }}- <a
+                            #{{ $project->id }} - <a
                                 href="{{ route('admin.projects.show', $project) }}">{{ $project->title }}</a> </br>
                         @endforeach
                     </p>
